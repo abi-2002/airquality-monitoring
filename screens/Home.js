@@ -24,15 +24,16 @@ const Home = () => {
 
   const [airQuality, setAirQuality] = useState({ mq135: 0, mq7: 0 });
   const { mq135, mq7 } = airQuality;
+  const currentDate = getCurrentDate();
+  const mq7Ref = ref(db, `MQ7/${currentDate}`);
+  const mq135Ref = ref(db, `MQ135/${currentDate}`);
 
   useEffect(() => {
 
     let mq7_listener, mq135_listener;
 
     const fetchAirQuality = async () => {
-      const currentDate = getCurrentDate();
-      const mq7Ref = ref(db, `MQ7/${currentDate}`);
-      const mq135Ref = ref(db, `MQ135/${currentDate}`);
+    
      
       mq7_listener = onValue(mq7Ref, async (snapshot) => {
 
@@ -65,7 +66,7 @@ const Home = () => {
     
   }, []);
 
-  const getMessage = (value) => {
+  const getMessageMQ7 = (value) => {
     if (value <= 9) return 'NORMAL';
     else if (value <= 35) return 'ACCEPTABLE';
     else if (value <= 100) return 'MARGINAL';
@@ -75,30 +76,39 @@ const Home = () => {
     else return 'LIFE THREATENING';
   };
 
-  const mq7_msg = getMessage(mq7);
+  const getMessageMQ135 = value => {
+
+    if (value <= 50 ) return "GOOD";
+    else if (value<=100) return 'MODERATE';
+    else if (value <= 200) return 'SENSITIVE';
+    else if (value <= 300) return 'UNHEALTHY';
+    else if (value <= 500) return 'HAZARDOUS';
+    else return 'DANGEROUS'
+  }
+
+  const mq7_msg = getMessageMQ7(mq7);
   
-  const mq135_msg = getMessage(mq135);
+  const mq135_msg = getMessageMQ135(mq135);
 
   return (
     <SafeAreaView style={styles.view}>
 
       <View style={styles.header_view}>
-        <Text style={styles.header}> Adhithyanz Air Quality Monitoring</Text>
+        <Text style={styles.header}> AIR QUALITY MONITORING SYSTEM</Text>
       </View>
      
       <View style={styles.graph_view}>
 
-        <TouchableOpacity style={styles.donut_view} onPress={() => nav.navigate('Info')}>
+        <TouchableOpacity style={styles.donut_view} onPress={() => nav.navigate('Info', {dbPath : `MQ7/${currentDate}`, heading : 'MQ7 Readings'})}>
           <Donut color={'#43736D'} text={mq7} percentage={mq7} fill_color={'#526965'}/>
         </TouchableOpacity>
-
-        <View style={styles.donut_view}>
+        <TouchableOpacity style={styles.donut_view} onPress={() => nav.navigate('Info', {dbPath : `MQ135/${currentDate}`, heading : 'MQ135 Readings'})}>
           <Donut color={'#536887'} text={mq135} percentage={mq135} fill_color={'#4a5463'}/>
-        </View>
+        </TouchableOpacity>
 
       </View>
 
-      <View style={styles.pi_view}>
+      <View style={styles.box_container}>
 
         <View style={[styles.box, {backgroundColor : '#43736D'}]}>
 
@@ -116,7 +126,7 @@ const Home = () => {
         <View style={[styles.box, {backgroundColor : '#536887'}]}>
 
           <View style={styles.condition}>
-            <Text style={styles.text}>Hazardous</Text>
+            <Text style={styles.text}>{mq135_msg}</Text>
           </View>
 
           <View style={styles.content}>
@@ -157,7 +167,7 @@ const styles = StyleSheet.create({
     },
 
     header : {
-        color : '#bbb',
+        color : '#627670',
         fontSize : fonts.large,
         textAlign : 'center',
         fontFamily : 'productsans'
@@ -179,7 +189,7 @@ const styles = StyleSheet.create({
       alignItems : 'center',
       justifyContent : 'center'
     },
-    pi_view : {
+    box_container : {
       ...shadowProps,
       backgroundColor : '#243345',
       borderRadius : 20,
