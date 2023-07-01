@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ref, onValue, query, limitToLast, get } from 'firebase/database';
+import { ref, onValue, query, limitToLast, get, remove } from 'firebase/database';
 import { db } from '../firebase';
+import * as Haptics from 'expo-haptics';
 import { useNavigation } from '@react-navigation/native';
 import Donut from '../components/Donut';
 
@@ -24,6 +25,8 @@ const Home = () => {
 
   const [airQuality, setAirQuality] = useState({ mq135: 0, mq7: 0 });
   const { mq135, mq7 } = airQuality;
+  const [ mq7PathExists, setmq7Path ] = useState(false);
+  const [ mq135PathExists, setmq135Path ] = useState(false);
   const currentDate = getCurrentDate();
   const mq7Ref = ref(db, `MQ7/${currentDate}`);
   const mq135Ref = ref(db, `MQ135/${currentDate}`);
@@ -41,9 +44,14 @@ const Home = () => {
           
           const mq7Value = await getLatestValue(mq7Ref);
           setAirQuality(prev => ({ ...prev, mq7: mq7Value }));
+          if(!mq7PathExists)
+            setmq7Path(true);
         }
-        else
+        else {
           setAirQuality(prev => ({ ...prev, mq7: 0 }));
+          setmq7Path(false);
+          
+        }
 
       });
       mq135_listener = onValue(mq135Ref, async (snapshot) => {
@@ -51,9 +59,13 @@ const Home = () => {
         if(snapshot.exists()) {
           const mq135Value = await getLatestValue(mq135Ref);
           setAirQuality(prev => ({ ...prev, mq135: mq135Value }));
+          if(!mq135PathExists)
+            setmq135Path(true);
         }
-        else 
+        else {
           setAirQuality(prev => ({ ...prev, mq135: 0 }));
+          setmq135Path(false);
+        }
       });  
     };   
     
@@ -99,10 +111,29 @@ const Home = () => {
      
       <View style={styles.graph_view}>
 
-        <TouchableOpacity style={styles.donut_view} onPress={() => nav.navigate('Info', {dbPath : `MQ7/${currentDate}`, heading : 'MQ7 Readings'})}>
+        <TouchableOpacity 
+          style={styles.donut_view}
+          onLongPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+              remove(mq7Ref);
+            }
+          } 
+          disabled = {!mq7PathExists} 
+          onPress={() => nav.navigate('Info', {dbPath : `MQ7/${currentDate}`, heading : 'MQ7 Readings'})}
+        >
           <Donut color={'#43736D'} text={mq7} percentage={mq7} fill_color={'#526965'}/>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.donut_view} onPress={() => nav.navigate('Info', {dbPath : `MQ135/${currentDate}`, heading : 'MQ135 Readings'})}>
+
+        <TouchableOpacity 
+          style={styles.donut_view} 
+          disabled = {!mq135PathExists} 
+          onLongPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+            remove(mq135Ref);
+          
+          }} 
+          onPress={() => nav.navigate('Info', {dbPath : `MQ135/${currentDate}`, heading : 'MQ135 Readings'})}
+        >
           <Donut color={'#536887'} text={mq135} percentage={mq135} fill_color={'#4a5463'}/>
         </TouchableOpacity>
 
