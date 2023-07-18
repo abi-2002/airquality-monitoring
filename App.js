@@ -6,10 +6,11 @@ import Home from './screens/Home';
 import * as Font from 'expo-font';
 import { useEffect, useState } from 'react';
 import Info from './screens/Info';
+import Emergency from './screens/Emergency';
 
 const Stack = createNativeStackNavigator();
 
-export default function App() {
+const App = () => {
 
   const customFonts = {
     'productsans': require('./assets/fonts/ProductSans-Regular.ttf'),
@@ -37,9 +38,11 @@ export default function App() {
                 <Stack.Navigator initialRouteName = {'Home'} screenOptions={{animation: "slide_from_right"}}>
                   <Stack.Screen name="Home" component={Home} options = {{headerShown:false}} />
                   <Stack.Screen name="Info" component={Info} options = {{headerShown:false}} />
+                  <Stack.Screen name="Emergency" component={Emergency} options = {{headerShown:false}} />
                 </Stack.Navigator>
             </SafeAreaProvider>
           </NavigationContainer>
     );
 
 }
+export default App;

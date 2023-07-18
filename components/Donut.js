@@ -1,4 +1,4 @@
-import { Text, View, Animated, Easing, StyleSheet} from 'react-native'
+import { Text, Animated, Easing, StyleSheet} from 'react-native'
 import Svg,  {  G, Circle, Defs, RadialGradient, Stop} from 'react-native-svg';
 import React, { useEffect, useRef } from 'react'
 import { fonts } from '../Constants';
@@ -13,6 +13,8 @@ const Donut = ({duration = 750, max = 1000, color, text="default", percentage, f
   const width = 150, height = 150;
  
   useEffect(() => {
+
+
     const animation = Animated.timing(animated, {
       toValue: percentage,
       duration,
@@ -41,15 +43,15 @@ const Donut = ({duration = 750, max = 1000, color, text="default", percentage, f
 
   return (
   <>
-    <Svg width={width} height={height} viewBox={`0 0 100 100`} color={'#243345'} stroke={'#243345'}>
+    <Svg width={width} height={height} viewBox={`0 0 100 100`} >
       <G>
         <Circle cx='50%' cy='50%' stroke={color} strokeWidth={10} r={40}
           strokeOpacity={0.2}
           fill={'transparent'} /> 
 
         <Circle cx='50%' cy='50%' stroke={color} strokeWidth={10} r={40}
-          strokeDasharray={Math.PI * 80} 
-          strokeDashoffset={Math.PI * 80}
+          strokeDasharray={circumference} 
+          strokeDashoffset={circumference}
           strokeLinecap='round'
           ref={circleRef}
           fill={'transparent'}/>    

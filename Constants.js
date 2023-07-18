@@ -29,3 +29,23 @@ export const getCurrentDate = () => {
     
     return `${day < 10 ? '0' + day : day}-${month < 10 ? '0' + month : month}-${year}`;
   };
+
+export const getMessageMQ7 = (value) => {
+    if (value <= 9) return 'NORMAL';
+    else if (value <= 35) return 'ACCEPTABLE';
+    else if (value <= 100) return 'MARGINAL';
+    else if (value <= 200) return 'POOR';
+    else if (value <= 400) return 'HAZARDOUS';
+    else if (value <= 800) return 'DANGEROUS';
+    else return 'LIFE THREATENING';
+  };
+
+export const getMessageMQ135 = value => {
+
+    if (value <= 50 ) return "GOOD";
+    else if (value<=100) return 'MODERATE';
+    else if (value <= 200) return 'SENSITIVE';
+    else if (value <= 300) return 'UNHEALTHY';
+    else if (value <= 500) return 'HAZARDOUS';
+    else return 'DANGEROUS'
+  }

@@ -1,20 +1,86 @@
-import { Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { Text, StyleSheet, ScrollView, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { db } from '../firebase';
 import { LineChart } from "react-native-chart-kit";
 import { onChildAdded, ref } from 'firebase/database';
 import DataCard from '../components/DataCard';
-import { width, fonts, shadowProps, getCurrentDate } from '../Constants';
+import { width, height, fonts, shadowProps, getMessageMQ135, getMessageMQ7 } from '../Constants';
+
+const morningFilter = (currentValue, index) => {
+  return index === 0 || index % 4 === 0 && index <= 48;
+}
+const eveningFilter =  (currentValue, index) => {
+  return index % 4 === 0 && index >= 48 && index <= 72; 
+}
+const nightFilter = (currentValue, index) => {
+  return index % 4 === 0 && index >= 72 && index <= 96;
+}
+const noFilter = (currentValue) => {
+  return true;
+}
+
+const avg = array => {
+  return Math.round(array.reduce((a, b) => a + b, 0)/array.length, 2);
+}
+
 
 const Info = ({ route, navigation }) => {
+
+  const total_label_set = useRef([]);
+  const total_data_set = useRef([]);
+  const activeTab = useRef(0);
+  const max_ppm = useRef(0);
+  const min_ppm = useRef(0);
+
+
   const [graphData, setGraphData] = useState({ labels: [], datasets: [{ data: [] }] });
+
   const [clickedDataPoint, setClickedDataPoint] = useState(null);
+  const [ chartWidth , setChartWidth ] = useState(width * 10);
+  const [ maxValue, setMaxValue] = useState(0);
+  const [ minValue, setMinValue] = useState(0);
+  const [ maxTime, setMaxTime ] = useState('');
+  const [ minTime, setMinTime ] = useState('');
+
+  const [ avgValue, setAvgValue] = useState(0);
+
   const [loading, setLoading] = useState(true);
 
-  const { dbPath, heading} = route.params;
+  const { dbPath, heading, sensor} = route.params;
   
+  const tabs = [
+    { 'name' : 'Total', 'filterFunction' : noFilter, 'graphWidth' : width * 10 },
+    { 'name' : 'Morning', 'filterFunction' : morningFilter, 'graphWidth' : width * 2},
+    { 'name' : 'Evening',  'filterFunction' : eveningFilter, 'graphWidth' : width },
+    { 'name' : 'Night', 'filterFunction' : nightFilter, 'graphWidth' : width },
+  ]
+  const [ selectedTab, setSelectedTab ] = useState(0);
   let listener;
+
+  const changeGraphData = (index) => {
+    setChartWidth(tabs[index].graphWidth);
+
+    const label_set = total_label_set.current.filter(tabs[index].filterFunction);
+    const ppm_values = total_data_set.current.filter(tabs[index].filterFunction);
+
+    setGraphData({
+      labels: label_set,
+      datasets: [{ data: ppm_values }]
+    });
+    max_ppm.current = Math.max(...ppm_values)
+    min_ppm.current = Math.min(...ppm_values)
+
+    setAvgValue(avg(ppm_values))
+    
+    setMaxValue(max_ppm.current);
+    setMaxTime(label_set[ppm_values.indexOf(max_ppm.current)]);
+   
+    setMinValue(min_ppm.current);
+    setMinTime(label_set[ppm_values.indexOf(min_ppm.current)]);
+
+  }
 
   useEffect(() => {
     
@@ -24,13 +90,35 @@ const Info = ({ route, navigation }) => {
 
     listener = onChildAdded(dbRef, (snapshot) => {
       const data = snapshot.val();
-      const val = Object.values(data)[0];
-      const key = Object.keys(data)[0];
+      const ppm = Object.values(data)[0];
+      const time = Object.keys(data)[0];
 
-      setGraphData((prev) => ({
-        labels: [...prev.labels, key],
-        datasets: [{ data: [...prev.datasets[0].data, val] }]
-      }));
+
+      total_label_set.current = [...total_label_set.current, time];
+      total_data_set.current = [...total_data_set.current, ppm];
+
+      const label_set = total_label_set.current.filter(tabs[activeTab.current].filterFunction);
+      const ppm_values = total_data_set.current.filter(tabs[activeTab.current].filterFunction);
+
+      if (ppm_values.length === 0){
+        setLoading(true);
+      }
+
+      setGraphData({
+        labels: label_set,
+        datasets: [{ data: ppm_values }]
+      });
+
+      max_ppm.current = Math.max(...ppm_values)
+      min_ppm.current = Math.min(...ppm_values)
+
+      setAvgValue(avg(ppm_values))
+      
+      setMaxValue(max_ppm.current);
+      setMaxTime(label_set[ppm_values.indexOf(max_ppm.current)]);
+     
+      setMinValue(min_ppm.current);
+      setMinTime(label_set[ppm_values.indexOf(min_ppm.current)]);
 
       if (loading) setLoading(false);
     });
@@ -44,63 +132,123 @@ const Info = ({ route, navigation }) => {
     <SafeAreaView style={styles.view}>
       <Text style={styles.heading}>{heading}</Text>
 
-      <ScrollView
-        style={styles.scroll_view_container}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-       
-      >
-        {loading ? null : (
-          <LineChart
-            data={graphData}
-            width={width * 10}
-            onDataPointClick={({ index }) => {
-         
-              setClickedDataPoint(index);
-            }}
-            withVerticalLabels={true}
-            withVerticalLines={true}
-            withHorizontalLabels={true}
-            withHorizontalLines={true}
-            height={300}
-            withDots={true}
-            yAxisLabel=""
-            yAxisSuffix=""
-            yAxisInterval={500}
-            chartConfig={{
-              backgroundColor: "#1C2735",
-              backgroundGradientFrom: "#1C2735",
-              backgroundGradientTo: "#1C2735",
-              decimalPlaces: 0,
-              color: (opacity = 1) => '#43736D90',
-              labelColor: (opacity = 1) => '#43736D',
-              propsForDots: {
-                r: "2",
-                strokeWidth: "0",
-              },
-            }}
-            bezier
-            style={{
-              paddingRight: width * 0.1,
-              paddingBottom: -width * 0.03,
-            }}
-            renderDotContent={({ x, y, index }) => {
-              if (index !== clickedDataPoint) return null;
-              return (
-                <TouchableOpacity key={index} >
-                  <DataCard
-                    x={x}
-                    y={y} 
-                    ppm={graphData.datasets[0].data[index]}
-                    time={graphData.labels[index]}
-                  />
-                </TouchableOpacity>
-              );
-            }}
-            segments={2}
-          />
-        )}
+      <View style={styles.chart_container}>       
+        <ScrollView
+          style={styles.scroll_view_container}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+        >
+      
+          {loading ? null : (
+            <LineChart
+              data={graphData}
+              width={chartWidth}
+              onDataPointClick={({ index }) => {
+          
+                setClickedDataPoint(index);
+              }}
+              withVerticalLabels={true}
+              withVerticalLines={true}
+              withHorizontalLabels={true}
+              withHorizontalLines={true}
+              height={300}
+              withDots={true}
+              yAxisLabel=""
+              yAxisSuffix=""
+              yAxisInterval={500}
+              chartConfig={{
+                backgroundColor: '#344050',
+                backgroundGradientFrom: '#466568',
+                backgroundGradientTo: "#466568",
+                decimalPlaces: 0,
+                color: (opacity = 1) => '#1C2735',
+                labelColor: (opacity = 1) => "#1C2735",
+                propsForDots: {
+                  r: "4",
+                  strokeWidth: "0",
+                }
+              }}
+              bezier
+              style={{
+                paddingRight: width * 0.1,
+
+                borderRadius : 15
+               
+              }}
+              renderDotContent={({ x, y, index }) => {
+                if (index !== clickedDataPoint) return null;
+                return (
+                  <TouchableOpacity key={index} >
+                    <DataCard
+                      x={x}
+                      y={y} 
+                      ppm={graphData.datasets[0].data[index]}
+                      time={graphData.labels[index]}
+                    />
+                  </TouchableOpacity>
+                );
+              }}
+              segments={2}
+            />
+          )}
+
+        
+     
       </ScrollView>
+
+      <View style={styles.range_filter}>
+
+          {tabs.map((item, index) => 
+            <TouchableOpacity key={index} onPress={() =>  { 
+              activeTab.current = index;
+              setSelectedTab(activeTab.current); 
+              changeGraphData(index);
+            }} 
+              disabled={index === selectedTab}
+              style={index === selectedTab ? styles.range_button_selected : styles.range_button} >
+              <Text style={styles.range_button_text}>{item.name}</Text>
+            </TouchableOpacity>
+
+          )}
+
+      </View>
+
+      </View>
+
+      { loading ? null : (
+      <View style={styles.additional_info}>
+        <View style={styles.info_row}>
+
+          <Text style={[styles.additional_info_text,{ fontSize : fonts.large + 5}]}>Average</Text>
+          <View style={{display : 'flex', alignItems : 'center', justifyContent : 'space-between'}}>
+            <Text style={styles.additional_info_text}>{avgValue+ ' ppm'}</Text>
+            <View style={styles.msg_box}>
+              <Text style={{fontFamily : 'productsans', fontSize : fonts.small - 1}}>
+                {sensor === 'MQ7' ? getMessageMQ7(avgValue) : getMessageMQ135(avgValue)}
+              </Text>
+            </View>
+          </View>
+          
+        </View>
+        <View style={styles.info_row}>
+          <Text style={styles.additional_info_text}>Maximum</Text>
+          <View style={{display : 'flex', alignItems : 'center', justifyContent : 'center'}}>
+            <Text style={styles.additional_info_text}>{maxValue+' ppm'}</Text>
+            <Text style={[styles.additional_info_text, {fontSize : fonts.small }]}>{'At '+maxTime}</Text>
+          </View>
+        </View>
+
+        <View style={styles.info_row}>
+          <Text style={styles.additional_info_text}>Minimum</Text>
+          <View style={{display : 'flex', alignItems : 'center', justifyContent : 'center'}}>
+            <Text style={styles.additional_info_text}>{minValue+' ppm'}</Text>
+            <Text style={[styles.additional_info_text, {fontSize : fonts.small }]}>{'At '+minTime}</Text>
+          </View>
+        </View>
+       
+
+      </View>)}
+     
     </SafeAreaView>
   );
 };
@@ -113,7 +261,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: width * 0.03,
     alignItems: 'center',
-    justifyContent: 'center'
+  
   },
   heading: {
     fontFamily: 'productsans_med',
@@ -133,4 +281,67 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexGrow: 0,
   },
+  chart_container : {
+    display : 'flex',
+    justifyContent : 'space-around',
+    height : height * 0.45,
+
+    
+  },
+  range_filter : {
+    display : 'flex',
+    flexDirection : 'row',
+    alignItems : 'center',
+    justifyContent : 'space-around'
+
+  },
+  range_button : {
+    backgroundColor : '#43736d20',
+    padding : width * 0.03,
+   
+    borderRadius : 15
+
+  },
+  range_button_selected : {
+    backgroundColor : '#43736d',
+    padding : width * 0.03,
+   
+    borderRadius : 15
+
+  },
+  range_button_text : {
+    fontFamily : 'productsans',
+    fontSize : fonts.small
+  },
+  additional_info : {
+    display : 'flex',
+    width : width * 0.9,
+    
+    paddingTop : width * 0.05,
+    flex : 1
+  },
+  additional_info_text : {
+    fontFamily : 'productsans',
+    color : '#bbccbb',
+    margin : width * 0.004,
+    fontSize : fonts.medium - 3
+  },
+  info_row : {
+    borderWidth : 0,
+    backgroundColor : '#43736d40',
+    paddingHorizontal : width * 0.04,
+    paddingVertical : width * 0.03,
+    borderRadius : 15,
+    margin : width * 0.01,  
+    display : 'flex',
+    flexDirection : 'row',
+    alignItems : 'center',
+    justifyContent : 'space-between'
+  },
+  msg_box : {
+    backgroundColor : '#43736D',
+    padding : width * 0.02,
+    borderRadius : 15,
+    margin : width * 0.01
+  }
 });
