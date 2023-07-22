@@ -49,3 +49,11 @@ export const getMessageMQ135 = value => {
     else if (value <= 500) return 'HAZARDOUS';
     else return 'DANGEROUS'
   }
+  export const getSymptomsMQ7 = (value) => {
+    if(value >= 35 && value <= 100) return 'You may experience mild headache and fatigue';
+    if(value > 100 && value <= 200) return 'Headache, dizziness, nausea, and confusion';
+    if(value > 200 && value <= 400) return 'Severe headache, dizziness, and increased heart rate';
+    if(value > 400 && value <= 800) return 'Life-threatening, symptoms worsen with prolonged exposure';
+    if(value>800) return 'Fatal levels, unconsciousness, and death';
+    return '';  
+  }

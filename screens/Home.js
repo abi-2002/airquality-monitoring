@@ -6,12 +6,8 @@ import { db } from '../firebase';
 import * as Haptics from 'expo-haptics';
 import { useNavigation } from '@react-navigation/native';
 import Donut from '../components/Donut';
-
-
 import { StatusBar } from 'expo-status-bar';
-
-
-import { fonts, shadowProps, width, getCurrentDate, getMessageMQ135, getMessageMQ7 } from '../Constants';
+import { fonts, shadowProps, width, getCurrentDate, getMessageMQ135, getMessageMQ7, getSymptomsMQ135, getSymptomsMQ7, height } from '../Constants';
 
 
 const getLatestValue = async (dbRef) => {
@@ -66,7 +62,6 @@ const Home = () => {
         }
       });
 
-
       mq135_listener = onValue(mq135Ref, async (snapshot) => {
 
         if(snapshot.exists()) {
@@ -101,13 +96,12 @@ const Home = () => {
 
   
   const mq7_msg = getMessageMQ7(mq7);
-  
   const mq135_msg = getMessageMQ135(mq135);
-
+  const mq7_symptoms = getSymptomsMQ7(mq7);
   return (
     <SafeAreaView style={styles.view}>
 
-      <TouchableOpacity style={styles.status} onLongPress={() => devicePowerOff()}>
+      <TouchableOpacity style={styles.status} disabled={deviceStatus === 'Offline'} onLongPress={() => devicePowerOff()}>
         <View style={styles[`circle_${deviceStatus}`]}></View>
         <Text style={styles.content_text}>{`Device ${deviceStatus}`}</Text>
 
@@ -118,7 +112,7 @@ const Home = () => {
       </View>
 
      
-     
+
       <View style={styles.graph_view}>
 
         <TouchableOpacity 
@@ -156,12 +150,17 @@ const Home = () => {
           <View style={styles.condition}>
             <Text style={styles.text}>{mq7_msg}</Text>
           </View>
+          { mq7_symptoms === '' ? null  : (
+            <View style={styles.symptoms}>
+              <Text style={styles.symptoms_text}>{mq7_symptoms}</Text>
+            </View>
 
-          <View style={styles.content}>
-            <Text style={styles.content_text}>CO</Text>
-          </View>  
-
+          )}
+           <View style={styles.content}>
+              <Text style={styles.content_text}>CO</Text>
+            </View>  
         </View>
+       
 
 
         <View style={[styles.box, {backgroundColor : '#536887'}]}>
@@ -169,7 +168,7 @@ const Home = () => {
           <View style={styles.condition}>
             <Text style={styles.text}>{mq135_msg}</Text>
           </View>
-
+        
           <View style={styles.content}>
             <Text style={styles.content_text}>OTHERS</Text>
           </View>
@@ -236,10 +235,11 @@ const styles = StyleSheet.create({
       backgroundColor : '#243345',
       borderRadius : 20,
       display : 'flex',
+      minHeight : height * 0.4,
       alignItems : 'center',
       justifyContent : 'space-evenly',
       width : '100%',
-      height : '40%',
+    
       margin : width * 0.035,
       
     },
@@ -263,6 +263,10 @@ const styles = StyleSheet.create({
       display : 'flex',
     },
 
+    symptoms_text : {
+      fontFamily : 'productsans',
+      fontSize : fonts.small
+    },
     text : {
       fontSize : fonts.medium,
       fontFamily : 'productsans'
@@ -279,23 +283,24 @@ const styles = StyleSheet.create({
     },
     status : {
       alignSelf : 'flex-start',
-      backgroundColor : '#455680',
-      padding : width * 0.02,
+      backgroundColor : '#4b4d73',
+      padding : width * 0.015,
+      width : width * 0.36,
       borderRadius : 15,
       display : 'flex',
       flexDirection : 'row',
       alignItems : 'center',
-      justifyContent : 'space-between'
+      justifyContent : 'space-around'
     },
     circle_Online : {
-      margin : width * 0.01,
+    
       width : width * 0.02,
       height : width * 0.02,
       borderRadius : width * 0.01,
       backgroundColor : '#43736D'
     },
     circle_Offline : {
-      margin : width * 0.01,
+     
       width : width * 0.02,
       height : width * 0.02,
       borderRadius : width * 0.01,

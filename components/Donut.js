@@ -1,20 +1,17 @@
 import { Text, Animated, Easing, StyleSheet} from 'react-native'
-import Svg,  {  G, Circle, Defs, RadialGradient, Stop} from 'react-native-svg';
+import Svg,  { G, Circle, Defs, RadialGradient, Stop } from 'react-native-svg';
 import React, { useEffect, useRef } from 'react'
 import { fonts } from '../Constants';
 
 const Donut = ({duration = 750, max = 1000, color, text="default", percentage, fill_color}) => {
 
   const circumference = Math.PI * 80;
-
   const animated = useRef(new Animated.Value(0)).current;
-
   const circleRef = useRef();
   const width = 150, height = 150;
  
   useEffect(() => {
-
-
+    
     const animation = Animated.timing(animated, {
       toValue: percentage,
       duration,
@@ -71,7 +68,7 @@ const Donut = ({duration = 750, max = 1000, color, text="default", percentage, f
     </Svg>
 
     <Text style={styles.text}>
-     {text}
+     {`${text} ppm`}
     </Text>
 
     </>
@@ -82,7 +79,7 @@ const styles = StyleSheet.create({
   text : {
     fontFamily : 'productsans_med', 
     position : 'absolute', 
-    fontSize : fonts.medium,
+    fontSize : fonts.small,
     color : '#191919'
   }
 }) 

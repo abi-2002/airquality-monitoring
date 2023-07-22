@@ -11,12 +11,16 @@ import { width, height, fonts, shadowProps, getMessageMQ135, getMessageMQ7 } fro
 const morningFilter = (currentValue, index) => {
   return index === 0 || index % 4 === 0 && index <= 48;
 }
+
+// [ '00:00', '00:15', '00:30', '00:45', '01:00'] 
 const eveningFilter =  (currentValue, index) => {
   return index % 4 === 0 && index >= 48 && index <= 72; 
 }
+
 const nightFilter = (currentValue, index) => {
   return index % 4 === 0 && index >= 72 && index <= 96;
 }
+
 const noFilter = (currentValue) => {
   return true;
 }
@@ -48,7 +52,7 @@ const Info = ({ route, navigation }) => {
 
   const [loading, setLoading] = useState(true);
 
-  const { dbPath, heading, sensor} = route.params;
+  const { dbPath, heading, sensor } = route.params;
   
   const tabs = [
     { 'name' : 'Total', 'filterFunction' : noFilter, 'graphWidth' : width * 10 },
@@ -59,11 +63,17 @@ const Info = ({ route, navigation }) => {
   const [ selectedTab, setSelectedTab ] = useState(0);
   let listener;
 
-  const changeGraphData = (index) => {
+  const changeGraphData = (index) => {   
     setChartWidth(tabs[index].graphWidth);
 
     const label_set = total_label_set.current.filter(tabs[index].filterFunction);
     const ppm_values = total_data_set.current.filter(tabs[index].filterFunction);
+
+    if (ppm_values.length === 0){
+      setLoading(true);
+      return;
+    }
+    setLoading(false);
 
     setGraphData({
       labels: label_set,
@@ -102,6 +112,7 @@ const Info = ({ route, navigation }) => {
 
       if (ppm_values.length === 0){
         setLoading(true);
+        return;
       }
 
       setGraphData({
@@ -139,7 +150,11 @@ const Info = ({ route, navigation }) => {
           showsHorizontalScrollIndicator={false}
         >
       
-          {loading ? null : (
+          {loading ? 
+          
+          <View style={{width: width, height : 300, display : 'flex', alignItems : 'center', justifyContent : 'center'}}>
+            <Text style={styles.additional_info_text}>Data not available</Text>
+          </View>: (
             <LineChart
               data={graphData}
               width={chartWidth}
@@ -205,6 +220,7 @@ const Info = ({ route, navigation }) => {
               changeGraphData(index);
             }} 
               disabled={index === selectedTab}
+
               style={index === selectedTab ? styles.range_button_selected : styles.range_button} >
               <Text style={styles.range_button_text}>{item.name}</Text>
             </TouchableOpacity>
