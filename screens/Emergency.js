@@ -1,3 +1,5 @@
+// Screen for displaying and contacting different Emergency Services
+
 import { View, Text, StyleSheet, TouchableOpacity, Linking } from 'react-native'
 import React from 'react';
 import { fonts, height, width } from '../Constants';
@@ -12,6 +14,8 @@ const Emergency = () => {
             </Text>
         </View>
         <View style={styles.box}>
+            {/* Displays emergency contacts - Fireforce, Police and Disaster Management */}
+            {/* On selecting any of the options, the corresponding contact number will be dialed on the user's phone */}
             <TouchableOpacity onPress={() => Linking.openURL(`tel:101`)} style={styles.emergency_data}>
                 <Text style={styles.text}>FIREFORCE</Text>
             </TouchableOpacity>
@@ -73,4 +77,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default Emergency
+export default Emergency;

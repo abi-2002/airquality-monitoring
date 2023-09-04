@@ -1,9 +1,14 @@
+// Small box that appears when a data point in the graph is pressed which shows pollution level at a given time
+
 import {Text, View } from 'react-native'
 import React from 'react'
 import {width,  fonts, shadowProps} from '../Constants'
 
 const cardWidth = width * 0.25;
 
+/* Props - x : x-coordinate of clicked data point , y : y-coordinate of clicked data point, ppm : ppm value at clicked point,
+           time : Time at the clicked point 
+*/
 const DataCard = ({x, y, ppm, time}) => {
    
     return (
@@ -15,8 +20,7 @@ const DataCard = ({x, y, ppm, time}) => {
                     borderRadius : 10,
                     backgroundColor : '#327a85',
                     top: y - width * 0.04,
-                    left : Math.max(x - cardWidth* 0.5, 0)
-                    /* left: Math.min(Math.max(x - cardWidth* 0.5, 0), endPoint)*/           
+                    left : Math.max(x - cardWidth* 0.5, 0) // Prevent negative values so that the card does not go outside the screen        
             }}
             >
                 <Text style={{fontFamily:'productsans', fontSize : fonts.small}}>
@@ -29,4 +33,4 @@ const DataCard = ({x, y, ppm, time}) => {
     );
 }
 
-export default DataCard
+export default DataCard;

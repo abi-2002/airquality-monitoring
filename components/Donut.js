@@ -1,17 +1,26 @@
+// Circular progress bar that indicates the pollution levels and its animations
+
 import { Text, Animated, Easing, StyleSheet} from 'react-native'
 import Svg,  { G, Circle, Defs, RadialGradient, Stop } from 'react-native-svg';
 import React, { useEffect, useRef } from 'react'
 import { fonts } from '../Constants';
 
+
+/* Props : duration - Animation duration, max - Maximum value in the progress bar,  color - Progress bar outer color,
+           text - Text to be displayed inside progress bar, percentage - Current progress percentage,
+           fill_color - Inner color of progress bat
+*/
 const Donut = ({duration = 750, max = 1000, color, text="default", percentage, fill_color}) => {
 
-  const circumference = Math.PI * 80;
-  const animated = useRef(new Animated.Value(0)).current;
-  const circleRef = useRef();
-  const width = 150, height = 150;
+  const circumference = Math.PI * 80; // Circumference of circular progress bar 
+  const animated = useRef(new Animated.Value(0)).current; // Initial reference value for animation 
+  const circleRef = useRef(); // Reference value for current progress
+
+  const width = 150, height = 150; // Svg width and height
  
   useEffect(() => {
     
+    // Creating animation timing function with the animation reference, percentage, duration and animation type
     const animation = Animated.timing(animated, {
       toValue: percentage,
       duration,
@@ -19,21 +28,23 @@ const Donut = ({duration = 750, max = 1000, color, text="default", percentage, f
       easing: Easing.out(Easing.ease),
     });
 
+    // Listener for listening changes in animation reference
     const listener = animated.addListener((v) => {
-      const Perc = 100 * v.value / max;
+      const Perc = 100 * v.value / max; // Calculate percentage from new value
       
-      const strokeDashoffset = circumference - (circumference * Perc) / 100;
+      const strokeDashoffset = circumference - (circumference * Perc) / 100; // Progress value
       
-      if (circleRef?.current) {
+      if (circleRef?.current) { // Set progress value
         circleRef.current.setNativeProps({
           strokeDashoffset,
         });
       }
     });
-
+    
     animation.start();
 
     return () => {
+      // Remove animation listener
       animated.removeListener(listener);
     };
   }, [animated, circumference, duration, max, percentage]);

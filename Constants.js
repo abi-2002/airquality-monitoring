@@ -1,8 +1,11 @@
+// Initialises all the constants in the app
 
 import { Dimensions, Platform } from "react-native";
 
+// Screen width and height of the user's device
 export const {width, height } = Dimensions.get('window');
 
+// Font sizes
 export const fonts = {
 
     small : Platform.OS === 'ios' ? height * 0.015 : height * 0.02,
@@ -11,6 +14,7 @@ export const fonts = {
 
 }
 
+// Properties for shadow in UI elements
 export const shadowProps = {
     shadowColor : '#000000',
     elevation : 8,
@@ -21,6 +25,8 @@ export const shadowProps = {
         y : 5
     }
 }
+
+// Function to get the current date
 export const getCurrentDate = () => {
     const currentDate = new Date();
     const day = currentDate.getDate();
@@ -30,6 +36,7 @@ export const getCurrentDate = () => {
     return `${day < 10 ? '0' + day : day}-${month < 10 ? '0' + month : month}-${year}`;
   };
 
+// Returns the pollution level for a given MQ7 sensor reading
 export const getMessageMQ7 = (value) => {
     if (value <= 9) return 'NORMAL';
     else if (value <= 35) return 'ACCEPTABLE';
@@ -40,6 +47,8 @@ export const getMessageMQ7 = (value) => {
     else return 'LIFE THREATENING';
   };
 
+
+// Returns the pollution level for a given MQ135 sensor reading
 export const getMessageMQ135 = value => {
 
     if (value <= 50 ) return "GOOD";
@@ -49,7 +58,10 @@ export const getMessageMQ135 = value => {
     else if (value <= 500) return 'HAZARDOUS';
     else return 'DANGEROUS'
   }
-  export const getSymptomsMQ7 = (value) => {
+
+
+// Returns the symptoms for a given MQ7 sensor reading
+export const getSymptomsMQ7 = (value) => {
     if(value >= 35 && value <= 100) return 'You may experience mild headache and fatigue';
     if(value > 100 && value <= 200) return 'Headache, dizziness, nausea, and confusion';
     if(value > 200 && value <= 400) return 'Severe headache, dizziness, and increased heart rate';
