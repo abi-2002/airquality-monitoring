@@ -21,14 +21,12 @@ The objective of the air quality monitoring project is to provide people with ac
 # Result
 
 <div style="display : flex;">
-
-<figure>
-    <img src="Home.png" width="200" alt="my alt text"/>
-    <figcaption>This is my caption text.</figcaption>
-</figure>
-
-<figure>
-    <img src="1.png" width="200" alt="my alt text"/>
-    <figcaption>This is my caption text.</figcaption>
-</figure>
+    <div style="display : flex; flex-direction : column;">
+        <img src="Home.png" width="200" alt="my alt text"/>
+        <figcaption>This is my caption text.</figcaption>
+    </div>
+    <div style="display : flex; flex-direction : column;">
+        <img src="1.png" width="200" alt="my alt text"/>
+        <figcaption>This is my caption text.</figcaption>
+    </div>
 </div>
