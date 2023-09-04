@@ -20,12 +20,8 @@ The objective of the air quality monitoring project is to provide people with ac
 - Android 5+ / iOS 13+ 
 # Result
 
-| Home              | All         | TOT          | tEST        | ASs         |
-| ----------------- | ----------- | ------------ | ----------- |             |
-| ![Home](Home.png) | ![1](1.png) | ![2](2.png)  | ![3](3.png) | ![4](4.png) |
-
-
-
-
-
+<figure>
+    <img src="Home.png" width="200" alt="my alt text"/>
+    <figcaption>This is my caption text.</figcaption>
+</figure>
 
