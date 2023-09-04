@@ -25,3 +25,7 @@ The objective of the air quality monitoring project is to provide people with ac
     <figcaption>This is my caption text.</figcaption>
 </figure>
 
+<figure>
+    <img src="1.png" width="200" alt="my alt text"/>
+    <figcaption>This is my caption text.</figcaption>
+</figure>
