@@ -19,12 +19,4 @@ The objective of the air quality monitoring project is to provide people with ac
 - React Native
 - Android 5+ / iOS 13+ 
 # Result
-
-<div style="display : flex;">
-    <div style="display : flex; flex-direction : column;">
-        <img src="Home.png" width="200" alt="my alt text"/>
-    </div>
-    <div style="display : flex; flex-direction : column;">
-        <img src="1.png" width="200" alt="my alt text"/>
-    </div>
-</div>
+![Home](Home.png) | ~[1](1.png)
