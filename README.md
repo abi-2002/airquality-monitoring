@@ -20,6 +20,7 @@ The objective of the air quality monitoring project is to provide people with ac
 - Android 5+ / iOS 13+ 
 # Result
 
+<p float="left">
 <figure>
     <img src="Home.png" width="200" alt="my alt text"/>
     <figcaption>This is my caption text.</figcaption>
@@ -29,3 +30,4 @@ The objective of the air quality monitoring project is to provide people with ac
     <img src="1.png" width="200" alt="my alt text"/>
     <figcaption>This is my caption text.</figcaption>
 </figure>
+</p>
