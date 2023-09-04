@@ -1,3 +1,4 @@
+# Abstract
 Air pollution is a major problem in many cities around the world, and it can have serious health consequences for people who are exposed to high levels of pollution. To address this problem, we propose an air quality monitoring system that uses IoT sensors (MQ135 & MQ7) to measure the levels of carbon monoxide and other gases in the air. The data from these sensors can be viewed in an app. The app will display the current levels of pollution, as well as historical data in the form of graphs.
 # Purpose and Need
 
@@ -5,7 +6,6 @@ Exposure to high levels of carbon monoxide and other gases in the air can have s
 # Project Objective
 
 The objective of the air quality monitoring project is to provide people with accurate and up-to-date information about the levels of carbon monoxide and other gases in the air.  By doing so, the project aims to raise awareness about the problem of air pollution and encourage people to take action to reduce their exposure to harmful pollutants. Ultimately, the project aims to improve public health.
-
 # Hardware Requirements
 
 - MQ135 Gas sensor  
@@ -20,8 +20,7 @@ The objective of the air quality monitoring project is to provide people with ac
 - Android 5+ / iOS 13+ 
 # Result
 
-![Home|300](./Home.png) 
-
+<img src="Home.png" width="200">
 
 
 
