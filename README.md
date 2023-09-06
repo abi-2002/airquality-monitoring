@@ -26,23 +26,24 @@ The objective of the air quality monitoring project is to provide people with ac
 
 # Result
 
-<table>
+<table style="border: 0 px;">
   <tr>
-    <td align="center" width="100px">
+    <td style="border: 0 px;" align="center" width="100px">
       <img src="Home.png" alt="Image 1" width="100px">
+      <p> Home Screen
     </td>
-    <td align="center" width="100px">
+    <td style="border: 0 px;" align="center" width="100px">
       <img src="1.png" alt="Image 2" width="100px">
     </td>
-    <td align="center" width="100px">
+    <td style="border: 0 px;" align="center" width="100px">
       <img src="2.png" alt="Image 3" width="100px">
     </td>
   </tr>
   <tr>
-    <td align="center" width="100px">
+    <td style="border: 0 px;" align="center" width="100px">
       <img src="3.png" alt="Image 4" width="100px">
     </td>
-    <td align="center" width="100px">
+    <td style="border: 0 px;" align="center" width="100px">
       <img src="4.png" alt="Image 5" width="100px">
     </td>
   </tr>
