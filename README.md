@@ -26,7 +26,7 @@ The objective of the air quality monitoring project is to provide people with ac
 
 # Result
 
-<div style="display: flex; justify-content : space-between;">
+<div style="display: flex; justify-content : space-between; align-items : center;">
   <img src="Home.png" alt="Image 1" width="200px" />
   <img src="1.png" alt="Image 1" width="200px" />
   <img src="2.png" alt="Image 1" width="200px" />
