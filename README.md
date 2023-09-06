@@ -37,21 +37,21 @@ The objective of the air quality monitoring project is to provide people with ac
       <img src="Emergency.png" alt="Total" width="300px" />  
     </td>
     <td align="center" width="300px">
-      <p>Graphical Analysis
+      <p>Graphical Analysis</p>
       <img src="1.png" alt="Total" width="300px" />
     </td>
   </tr>
   <tr>
    <td align="center" width="300px">
-      <p>Graphical Analysis - Morning
+      <p>Graphical Analysis - Morning</p>
       <img src="2.png" alt="Morning" width="300px" />
     </td>
     <td align="center" width="300px">
-      <p>Graphical Analysis - Evening
+      <p>Graphical Analysis - Evening</p>
       <img src="3.png" alt="Evening" width="300px" />
     </td>
     <td align="center" width="300px">
-      <p>Graphical Analysis - Night
+      <p>Graphical Analysis - Night</p>
       <img src="4.png" alt="Night" width="300px" />
     </td>
   </tr>
