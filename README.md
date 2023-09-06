@@ -22,7 +22,7 @@ The objective of the air quality monitoring project is to provide people with ac
 
 - <a href="https://nodejs.org/en/download">Node.js</a>
 - <a href="https://firebase.google.com/">Firebase Realtime database</a>
-- <a href="https://reactnative.dev/">React Native using Expo</a>
+- <a href="https://reactnative.dev/">React Native</a> using <a href="https://docs.expo.dev/get-started/expo-go/">Expo Go</a>
 - Operating System - Android 5+ / iOS 13+
 
 # Result
