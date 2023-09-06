@@ -26,31 +26,31 @@ The objective of the air quality monitoring project is to provide people with ac
 
 # Result
 
-<table style="border:none;">
+<table>
   <tr>
-    <td style="border:none; opacity : 0.4;" align="center" width="300px">
+    <td  align="center" width="300px">
       <img src="Home.png" alt="Home" width="300px" />
       <p>Home Screen</p>
     </td>
-    <td style="border:none opacity : 0.4;;" align="center" width="300px">
+    <td align="center" width="300px">
       <img src="Emergency.png" alt="Total" width="300px" />
       <p>Emergency Contacts
     </td>
-    <td style="border:none opacity : 0.4;;" align="center" width="300px">
+    <td align="center" width="300px">
       <img src="1.png" alt="Total" width="300px" />
       <p>Graphical Analysis
     </td>
-    <td style="border:none; opacity : 0.4;" align="center" width="300px">
+  </tr>
+  <tr>
+   <td align="center" width="300px">
       <img src="2.png" alt="Morning" width="300px" />
       <p>Graphical Analysis - Morning
     </td>
-  </tr>
-  <tr>
-    <td style="border:none; opacity : 0.4;" align="center" width="300px">
+    <td  align="center" width="300px">
       <img src="3.png" alt="Evening" width="300px" />
       <p>Graphical Analysis - Evening
     </td>
-    <td style="border:none; opacity : 0.4;  " align="center" width="300px">
+    <td  align="center" width="300px">
       <img src="4.png" alt="Night" width="300px" />
       <p>Graphical Analysis - Night
     </td>
