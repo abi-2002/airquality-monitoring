@@ -29,30 +29,31 @@ The objective of the air quality monitoring project is to provide people with ac
 <table>
   <tr>
     <td  align="center" width="300px">
-      <img src="Home.png" alt="Home" width="300px" />
       <p>Home Screen</p>
+      <img src="Home.png" alt="Home" width="300px" />
     </td>
     <td align="center" width="300px">
-      <img src="Emergency.png" alt="Total" width="300px" />
       <p>Emergency Contacts
+      <img src="Emergency.png" alt="Total" width="300px" />  
     </td>
     <td align="center" width="300px">
-      <img src="1.png" alt="Total" width="300px" />
       <p>Graphical Analysis
+      <img src="1.png" alt="Total" width="300px" />
     </td>
   </tr>
   <tr>
    <td align="center" width="300px">
-      <img src="2.png" alt="Morning" width="300px" />
       <p>Graphical Analysis - Morning
+      <img src="2.png" alt="Morning" width="300px" />
     </td>
-    <td  align="center" width="300px">
-      <img src="3.png" alt="Evening" width="300px" />
+    <td align="center" width="300px">
       <p>Graphical Analysis - Evening
+      <img src="3.png" alt="Evening" width="300px" />
     </td>
-    <td  align="center" width="300px">
-      <img src="4.png" alt="Night" width="300px" />
+    <td align="center" width="300px">
       <p>Graphical Analysis - Night
+      <img src="4.png" alt="Night" width="300px" />
+      
     </td>
   </tr>
 </table>
