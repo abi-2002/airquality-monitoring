@@ -68,8 +68,8 @@ try:
         curr_time = datetime.now().replace(hour = 0, minute = 0)
 
         # Read data from MQ135 and MQ7 sensors
-        mq135 = readadc(0)
-        mq7 = readadc(1)
+        mq135 = readadc(0) # MQ135 connected to channel 0 of MCP3008
+        mq7 = readadc(1) # MQ7 connected to channel 1 of MCP3008
 
         # Add the data from sensors along with the date to database
         db.child('MQ135').child(curr_date).push({ curr_time.strftime('%H:%M') : mq135})

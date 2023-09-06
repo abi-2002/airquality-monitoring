@@ -60,6 +60,8 @@ The objective of the air quality monitoring project is to provide people with ac
 
 # Installation
 
+## React Native App
+
 1. Clone this repository and change directory
 
 ```bash
@@ -91,4 +93,13 @@ const firebaseConfig = {
 
 ```bash
 npx expo start
+```
+
+## Raspberry Pi
+
+1. Copy `read_sensors.py` to the Raspberry Pi.
+2. Execute the script
+
+```bash
+python3 read_sensors.py
 ```
