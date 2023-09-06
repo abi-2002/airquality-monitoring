@@ -20,8 +20,9 @@ The objective of the air quality monitoring project is to provide people with ac
 
 # Software Requirements
 
-- Firebase Realtime database
-- React Native using Expo
+- <a href="https://nodejs.org/en/download">Node.js</a>
+- <a href="https://firebase.google.com/">Firebase Realtime database</a>
+- <a href="https://reactnative.dev/">React Native using Expo</a>
 - Operating System - Android 5+ / iOS 13+
 
 # Result
