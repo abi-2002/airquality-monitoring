@@ -33,7 +33,7 @@ The objective of the air quality monitoring project is to provide people with ac
       <img src="Home.png" alt="Home" width="300px" />
     </td>
     <td align="center" width="300px">
-      <p>Emergency Contacts
+      <p>Emergency Contacts</p>
       <img src="Emergency.png" alt="Total" width="300px" />  
     </td>
     <td align="center" width="300px">
