@@ -53,7 +53,6 @@ The objective of the air quality monitoring project is to provide people with ac
     <td align="center" width="300px">
       <p>Graphical Analysis - Night
       <img src="4.png" alt="Night" width="300px" />
-      
     </td>
   </tr>
 </table>
