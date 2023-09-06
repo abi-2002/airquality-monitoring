@@ -21,14 +21,14 @@ The objective of the air quality monitoring project is to provide people with ac
 # Software Requirements
 
 - Firebase Realtime database
-- React Native
-- Android 5+ / iOS 13+
+- React Native using Expo
+- Operating System - Android 5+ / iOS 13+
 
 # Result
 
 <table>
   <tr>
-    <td  align="center" width="300px">
+    <td align="center" width="300px">
       <p>Home Screen</p>
       <img src="screenshots/Home.png" alt="Home" width="300px" />
     </td>
