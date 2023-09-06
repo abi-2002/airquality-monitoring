@@ -26,9 +26,35 @@ The objective of the air quality monitoring project is to provide people with ac
 
 # Result
 
-<div style="display: flex; justify-content : space-between; align-items : center;">
-  <img src="Home.png" alt="Image 1" width="200px" />
-  <p> Home Screen
-  <img src="1.png" alt="Image 1" width="200px" />
-  <img src="2.png" alt="Image 1" width="200px" />
-</div>
+<style>
+  table {
+    border-collapse: collapse;
+  }
+  table, td {
+    border: none;
+  }
+</style>
+<table style="border:none;">
+  <tr>
+    <td style="border:none;" align="center" width="200px">
+      <img src="Home.png" alt="Image 1" width="200px" />
+      <p>Home Screen</p>
+    </td>
+
+    <td style="border:none;" align="center" width="200px">
+      <img src="1.png" alt="Image 2" width="200px" />
+    </td>
+    <td style="border:none;" align="center" width="200px">
+      <img src="2.png" alt="Image 3" width="200px" />
+    </td>
+
+  </tr>
+  <tr>
+    <td style="border:none;" align="center" width="200px">
+      <img src="3.png" alt="Image 4" width="200px" />
+    </td>
+    <td style="border:none;" align="center" width="200px">
+      <img src="4.png" alt="Image 5" width="200px" />
+    </td>
+  </tr>
+</table>
