@@ -28,23 +28,23 @@ The objective of the air quality monitoring project is to provide people with ac
 
 <table style="border:none;">
   <tr>
-    <td style="border:none; opacity : 0.4;" align="center" width="200px">
-      <img src="Home.png" alt="Image 1" width="200px" />
+    <td style="border:none; opacity : 0.4;" align="center" width="300px">
+      <img src="Home.png" alt="Image 1" width="300px" />
       <p>Home Screen</p>
     </td>
-    <td style="border:none opacity : 0.4;;" align="center" width="200px">
-      <img src="1.png" alt="Image 2" width="200px" />
+    <td style="border:none opacity : 0.4;;" align="center" width="300px">
+      <img src="1.png" alt="Image 2" width="300px" />
     </td>
-    <td style="border:none; opacity : 0.4;" align="center" width="200px">
-      <img src="2.png" alt="Image 3" width="200px" />
+    <td style="border:none; opacity : 0.4;" align="center" width="300px">
+      <img src="2.png" alt="Image 3" width="300px" />
     </td>
   </tr>
   <tr>
-    <td style="border:none; opacity : 0.4;" align="center" width="200px">
-      <img src="3.png" alt="Image 4" width="200px" />
+    <td style="border:none; opacity : 0.4;" align="center" width="300px">
+      <img src="3.png" alt="Image 4" width="300px" />
     </td>
-    <td style="border:none; opacity : 0.4;" align="center" width="200px">
-      <img src="4.png" alt="Image 5" width="200px" />
+    <td style="border:none; opacity : 0.4;  " align="center" width="300px">
+      <img src="4.png" alt="Image 5" width="300px" />
     </td>
   </tr>
 </table>
