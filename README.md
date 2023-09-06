@@ -56,3 +56,38 @@ The objective of the air quality monitoring project is to provide people with ac
     </td>
   </tr>
 </table>
+
+# Installation
+
+1. Clone this repository and change directory
+
+```bash
+git clone https://github.com/abi-2002/airquality-monitoring.git
+cd airquality-monitoring
+```
+
+2. Install NPM packages using expo
+
+```bash
+npx expo install
+```
+
+3. Provide the appropriate configurations in `firebase.js`
+
+```javascript
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "FIREBASE_PROJECT_DOMAIN",
+  databaseURL: "DATABASE_URL",
+  projectId: "PROJECT_ID",
+  storageBucket: "STORAGE_BUCKET",
+  messagingSenderId: "MSG_SENDER_ID",
+  appId: "APP_ID",
+};
+```
+
+4. Run the application
+
+```bash
+npx expo start
+```
